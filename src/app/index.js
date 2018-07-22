@@ -13,13 +13,18 @@ const store = createStore(combineReducers(reducers), window.__REDUX_DEVTOOLS_EXT
 import App from './components/App';
 
 //Дочерние компоненты
+import Header from './components/Header';
+import AddItem from './components/AddItem';
 import Categories from './components/Categories';
-
+import ItemsShow from './components/ItemsShow';
 
 ReactDOM.render(
     <Provider store={store}>
         <App>
-            <Categories/>
+        	<Header/>
+        	<Categories/>
+        	<ItemsShow/>
+            <AddItem/>
         </App>
     </Provider>,
     document.getElementById('root')

@@ -12,7 +12,7 @@
     "-----BUILDS": "-----",
     "build:scss": "node-sass src/scss/style.scss -o public/css/",
     "build:js": "browserify src/app/index.js -o public/js/bundle.js -t [ babelify --presets [ react es2015 ] ]",
-    "build": "concurrently 'npm run build:scss' 'npm run build:js'",
+    "build": "concurrently \"npm run build:scss\" \"npm run build:js\" ",
     "build:scss:min": "node-sass --output-style compressed src/scss/style.scss -o public/css/",
     "-----WATCHERS": "-----",
     "watch:css": "npm run build:scss && npm run build:scss -- -w",
@@ -50,7 +50,8 @@
     "react-router": "^4.2.0",
     "redux": "^3.7.2",
     "rimraf": "^2.6.2",
-    "watchify": "^3.9.0"
+    "watchify": "^3.9.0",
+    "prop-types": "^15.5.7"
   },
   "devDependencies": {
     "concurrently": "^3.6.0"

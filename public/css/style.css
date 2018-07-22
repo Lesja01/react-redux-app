@@ -1,0 +1,65 @@
+.categories {
+  text-align: left;
+  position: relative;
+  float: left;
+  width: 20%;
+  height: 100%;
+  border: 2px solid green;
+  margin: 0px;
+  padding: 10px; }
+  .categories h1 {
+    position: relative;
+    font-size: 25px; }
+  .categories button {
+    margin: 10px;
+    border-radius: 3px; }
+
+.AddItem {
+  background-color: silver;
+  border: 2px solid gray;
+  float: left;
+  width: 20%;
+  height: 100%; }
+
+img {
+  position: relative;
+  width: 50px;
+  height: 50px; }
+
+.ItemsShow {
+  text-align: left;
+  float: left;
+  width: 50%;
+  height: 100%;
+  padding: 10px;
+  margin: 20px; }
+
+.category {
+  border-bottom: 1px solid gray; }
+
+img {
+  margin-right: 10px; }
+
+#categor {
+  font-size: 9px; }
+
+body {
+  text-align: center;
+  color: harborrat;
+  /********* Canvas*************/
+  background: url(../img/bg2.jpg) no-repeat center center fixed;
+  -webkit-background-size: 100%;
+  -moz-background-size: 100%;
+  -o-background-size: 100%;
+  background-size: 100%;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover; }
+
+.header {
+  font-size: 16px;
+  color: green;
+  padding: 10px; }
+  .header button {
+    margin: 10px; }

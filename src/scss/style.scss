@@ -1,0 +1,33 @@
+@import "Categories.scss";
+@import "AddItem.scss";
+@import "ItemsShow.scss";
+body{
+	text-align: center;
+	color:harborrat;
+
+ /********* Canvas*************/
+ 
+    background: url(../img/bg2.jpg) no-repeat center center fixed;
+    -webkit-background-size: 100%; 
+    -moz-background-size: 100%; 
+    -o-background-size: 100%; 
+    background-size: 100%; 
+	-webkit-background-size: cover;
+      -moz-background-size: cover;
+      -o-background-size: cover;
+      background-size: cover;
+}
+
+
+.header{
+		font-size:16px;
+		color: green;
+		padding:10px;
+		button{
+			margin:10px;
+		}
+
+	}
+
+
+	

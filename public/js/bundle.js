@@ -20854,21 +20854,185 @@ Object.defineProperty(exports, "__esModule", {
  * */
 
 //categories actions
-var addCategory = exports.addCategory = function addCategory(id, text) {
-    var enc = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '#';
-    var temp = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false;
+var addItem = exports.addItem = function addItem(id) {
+    var category = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "x";
+    var text = arguments[2];
+    var about = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : '#';
+    var temp = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : false;
     return {
-        type: 'ADD_CATEGORY',
+        type: 'ADD_ITEM',
         id: id,
+        category: category,
         name: text,
-        enc: enc,
+        about: about,
         temp: temp
+    };
+};
+var choiceCategory = exports.choiceCategory = function choiceCategory(choiseGoodTipe) {
+    return {
+        type: 'CAT_CHOICE',
+        choiseGoodTipe: choiseGoodTipe
     };
 };
 
 // * actions
 
 },{}],68:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactDom = require('react-dom');
+
+var _reactDom2 = _interopRequireDefault(_reactDom);
+
+var _reactRedux = require('react-redux');
+
+var _actions = require('../actions');
+
+var actions = _interopRequireWildcard(_actions);
+
+var _redux = require('redux');
+
+var _propTypes = require('prop-types');
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+// ES6
+
+
+var mapStateToProps = function mapStateToProps(state) {
+    return {
+
+        categories: state.categories,
+        item_id: Date.now()
+    };
+};
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+    return {
+        addItem: (0, _redux.bindActionCreators)(actions.addItem, dispatch)
+    };
+};
+
+var AddItem = function (_React$Component) {
+    _inherits(AddItem, _React$Component);
+
+    function AddItem() {
+        _classCallCheck(this, AddItem);
+
+        return _possibleConstructorReturn(this, (AddItem.__proto__ || Object.getPrototypeOf(AddItem)).apply(this, arguments));
+    }
+
+    _createClass(AddItem, [{
+        key: 'addItem',
+
+
+        //создание категории
+        value: function addItem() {
+            var it_id = this.props.item_id + 1;
+            var it_category = _reactDom2.default.findDOMNode(this.refs.category_belongs).text;
+            var it_name = _reactDom2.default.findDOMNode(this.refs.item_add).value;
+            var it_about = _reactDom2.default.findDOMNode(this.refs.item_about).value;
+            var it_temp = false;
+            this.props.addItem(it_id, it_category, it_name, it_about, it_temp);
+        }
+
+        //отрисовка компонента
+
+    }, {
+        key: 'render',
+        value: function render() {
+            // destruction нужных свойств из объекта this.props
+            var categories = this.props.categories;
+
+
+            var category = categories.map(function (item, i) {
+                return _react2.default.createElement(
+                    'option',
+                    { key: i, ref: 'category_belongs' },
+                    item.category_name
+                );
+            });
+            console.log(this);
+            return _react2.default.createElement(
+                'div',
+                { className: 'AddItem' },
+                _react2.default.createElement(
+                    'h2',
+                    null,
+                    '\u0414\u043E\u0431\u0430\u0432\u0438\u0442\u044C \u0442\u043E\u0432\u0430\u0440:'
+                ),
+                _react2.default.createElement(
+                    'p',
+                    null,
+                    _react2.default.createElement(
+                        'label',
+                        null,
+                        '\u041A\u0430\u0442\u0435\u0433\u043E\u0440\u0438\u044F',
+                        _react2.default.createElement('br', null),
+                        _react2.default.createElement(
+                            'select',
+                            { type: 'text', defaultValue: '' },
+                            category
+                        )
+                    )
+                ),
+                _react2.default.createElement(
+                    'p',
+                    null,
+                    _react2.default.createElement(
+                        'label',
+                        null,
+                        '\u041D\u0430\u0437\u0432\u0430\u043D\u0438\u0435 \u0442\u043E\u0432\u0430\u0440\u0430',
+                        _react2.default.createElement('br', null),
+                        _react2.default.createElement('input', { ref: 'item_add', size: '20', type: 'text', defaultValue: '' })
+                    )
+                ),
+                _react2.default.createElement(
+                    'p',
+                    null,
+                    _react2.default.createElement(
+                        'label',
+                        null,
+                        '\u043E\u043F\u0438\u0441\u0430\u043D\u0438\u0435',
+                        _react2.default.createElement('br', null),
+                        _react2.default.createElement('textarea', { ref: 'item_about', type: 'text', defaultValue: '' })
+                    )
+                ),
+                _react2.default.createElement(
+                    'p',
+                    null,
+                    _react2.default.createElement('input', { ref: 'item_submit', onClick: this.addItem.bind(this), type: 'submit', value: '\u0414\u043E\u0431\u0430\u0432\u0438\u0442\u044C' })
+                )
+            );
+        }
+    }]);
+
+    return AddItem;
+}(_react2.default.Component);
+
+exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(AddItem);
+
+},{"../actions":67,"prop-types":34,"react":56,"react-dom":38,"react-redux":48,"redux":62}],69:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -20886,6 +21050,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 * */
 
 var App = function App(props) {
+
     return _react2.default.createElement(
         'div',
         { className: 'content' },
@@ -20895,7 +21060,7 @@ var App = function App(props) {
 
 exports.default = App;
 
-},{"react":56}],69:[function(require,module,exports){
+},{"react":56}],70:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -20932,14 +21097,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var mapStateToProps = function mapStateToProps(state) {
     return {
-        categories: state.categories,
-        category_id: Date.now().toString()
+        categories: state.categories
+
     };
 };
-
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     return {
-        addCategory: (0, _redux.bindActionCreators)(actions.addCategory, dispatch)
+        choiceCategory: (0, _redux.bindActionCreators)(actions.choiceCategory, dispatch)
     };
 };
 
@@ -20953,134 +21117,47 @@ var Categories = function (_React$Component) {
     }
 
     _createClass(Categories, [{
-        key: 'addCategory',
+        key: 'choiceCategory',
+        value: function choiceCategory(i) {
 
-
-        //создание категории
-        value: function addCategory() {
-            var cat_id = this.props.category_id + 1;
-            var cat_name = _reactDom2.default.findDOMNode(this.refs.category_add).value;
-            var cat_enc = _reactDom2.default.findDOMNode(this.refs.category_enc).value;
-            var cat_temp = _reactDom2.default.findDOMNode(this.refs.category_temp).checked;
-            this.props.addCategory(cat_id, cat_name, cat_enc, cat_temp);
+            var choiseGoodTipe = this.props.categories[i].category_name;
+            this.props.choiceCategory(choiseGoodTipe);
         }
-
         //отрисовка компонента
 
     }, {
         key: 'render',
         value: function render() {
+            var _this2 = this;
+
             var categories = this.props.categories; // destruction нужных свойств из объекта this.props
 
-            var activeCategoriesTemplate = categories.map(function (item, i) {
-                if (item.temp) {
-                    return _react2.default.createElement(
-                        'div',
-                        { key: i },
+            console.log(this);
+            var category = categories.map(function (cat, i) {
+                return _react2.default.createElement(
+                    'div',
+                    { key: i },
+                    _react2.default.createElement(
+                        'span',
+                        null,
                         _react2.default.createElement(
-                            'span',
-                            null,
-                            _react2.default.createElement(
-                                'b',
-                                null,
-                                item.category_name
-                            ),
-                            ' \u2014 ',
-                            item.category_enc
+                            'button',
+                            { onClick: _this2.choiceCategory.bind(_this2, i) },
+                            cat.category_name
                         )
-                    );
-                }
-            });
-            var inactiveCategoriesTemplate = categories.map(function (item, i) {
-                if (!item.temp) {
-                    return _react2.default.createElement(
-                        'div',
-                        { key: i, className: 'b-category' },
-                        _react2.default.createElement(
-                            'span',
-                            null,
-                            _react2.default.createElement(
-                                'b',
-                                null,
-                                item.category_name
-                            ),
-                            ' \u2014\xA0',
-                            item.category_enc
-                        )
-                    );
-                }
+                    )
+                );
             });
 
             return _react2.default.createElement(
                 'div',
-                null,
+                { className: 'categories' },
                 _react2.default.createElement(
                     'h1',
                     null,
                     '\u041A\u0410\u0422\u0415\u0413\u041E\u0420\u0418\u0418'
                 ),
-                _react2.default.createElement(
-                    'h2',
-                    null,
-                    '\u0410\u043A\u0442\u0438\u0432\u043D\u044B\u0435:'
-                ),
-                _react2.default.createElement(
-                    'div',
-                    null,
-                    activeCategoriesTemplate
-                ),
-                _react2.default.createElement(
-                    'h2',
-                    null,
-                    '\u041D\u0435\u0430\u043A\u0442\u0438\u0432\u043D\u044B\u0435:'
-                ),
-                _react2.default.createElement(
-                    'div',
-                    null,
-                    inactiveCategoriesTemplate
-                ),
-                _react2.default.createElement(
-                    'h2',
-                    null,
-                    '\u0414\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u0438\u0435:'
-                ),
-                _react2.default.createElement(
-                    'p',
-                    null,
-                    _react2.default.createElement(
-                        'label',
-                        null,
-                        '\u041D\u0430\u0437\u0432\u0430\u043D\u0438\u0435 \u043A\u0430\u0442\u0435\u0433\u043E\u0440\u0438\u0438',
-                        _react2.default.createElement('br', null),
-                        _react2.default.createElement('input', { ref: 'category_add', size: '20', type: 'text', defaultValue: '' })
-                    )
-                ),
-                _react2.default.createElement(
-                    'p',
-                    null,
-                    _react2.default.createElement(
-                        'label',
-                        null,
-                        '\u044F\u043A\u043E\u0440\u043D\u0430\u044F \u0441\u0441\u044B\u043B\u043A\u0430',
-                        _react2.default.createElement('br', null),
-                        _react2.default.createElement('input', { ref: 'category_enc', type: 'text', defaultValue: '' })
-                    )
-                ),
-                _react2.default.createElement(
-                    'div',
-                    null,
-                    _react2.default.createElement(
-                        'label',
-                        null,
-                        _react2.default.createElement('input', { ref: 'category_temp', type: 'checkbox', defaultChecked: true }),
-                        '\u0410\u043A\u0442\u0438\u0432\u043D\u0430\u044F'
-                    )
-                ),
-                _react2.default.createElement(
-                    'p',
-                    null,
-                    _react2.default.createElement('input', { ref: 'category_submit', onClick: this.addCategory.bind(this), type: 'submit', value: '\u0414\u043E\u0431\u0430\u0432\u0438\u0442\u044C' })
-                )
+                category
             );
         }
     }]);
@@ -21088,9 +21165,192 @@ var Categories = function (_React$Component) {
     return Categories;
 }(_react2.default.Component);
 
+;
+
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Categories);
 
-},{"../actions":67,"react":56,"react-dom":38,"react-redux":48,"redux":62}],70:[function(require,module,exports){
+},{"../actions":67,"react":56,"react-dom":38,"react-redux":48,"redux":62}],71:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactDom = require('react-dom');
+
+var _reactDom2 = _interopRequireDefault(_reactDom);
+
+var _reactRedux = require('react-redux');
+
+var _actions = require('../actions');
+
+var actions = _interopRequireWildcard(_actions);
+
+var _redux = require('redux');
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var mapStateToProps = function mapStateToProps(state) {
+    return {
+        items: state.items
+    };
+};
+
+var Header = function (_React$Component) {
+    _inherits(Header, _React$Component);
+
+    function Header() {
+        _classCallCheck(this, Header);
+
+        return _possibleConstructorReturn(this, (Header.__proto__ || Object.getPrototypeOf(Header)).apply(this, arguments));
+    }
+
+    _createClass(Header, [{
+        key: 'render',
+
+
+        //отрисовка компонента
+        value: function render() {
+
+            return _react2.default.createElement(
+                'div',
+                { className: 'header' },
+                _react2.default.createElement(
+                    'h1',
+                    null,
+                    'REACT-REDUX'
+                )
+            );
+        }
+    }]);
+
+    return Header;
+}(_react2.default.Component);
+
+;
+
+exports.default = (0, _reactRedux.connect)(mapStateToProps)(Header);
+
+},{"../actions":67,"react":56,"react-dom":38,"react-redux":48,"redux":62}],72:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactDom = require('react-dom');
+
+var _reactDom2 = _interopRequireDefault(_reactDom);
+
+var _reactRedux = require('react-redux');
+
+var _actions = require('../actions');
+
+var actions = _interopRequireWildcard(_actions);
+
+var _redux = require('redux');
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var mapStateToProps = function mapStateToProps(state) {
+    return {
+        items: state.items
+    };
+};
+
+var ItemsShow = function (_React$Component) {
+    _inherits(ItemsShow, _React$Component);
+
+    function ItemsShow() {
+        _classCallCheck(this, ItemsShow);
+
+        return _possibleConstructorReturn(this, (ItemsShow.__proto__ || Object.getPrototypeOf(ItemsShow)).apply(this, arguments));
+    }
+
+    _createClass(ItemsShow, [{
+        key: 'render',
+        value: function render() {
+            var items = this.props.items;
+
+
+            var ItemTemplate = items.map(function (item, i) {
+                if (item.temp == false) {
+                    return _react2.default.createElement(
+                        'div',
+                        { key: i, className: 'category' },
+                        _react2.default.createElement('img', { src: '../img/1.jpg', alt: 'img' }),
+                        _react2.default.createElement(
+                            'span',
+                            null,
+                            _react2.default.createElement(
+                                'b',
+                                null,
+                                item.item_name
+                            ),
+                            ' \u2014\xA0',
+                            item.item_about,
+                            _react2.default.createElement(
+                                'p',
+                                { id: 'categor' },
+                                '\u043A\u0430\u0442\u0435\u0433\u043E\u0440\u0438\u044F: ',
+                                item.category_belongs
+                            )
+                        )
+                    );
+                } else {}
+            });
+            console.log(this);
+            return _react2.default.createElement(
+                'div',
+                { className: 'ItemsShow' },
+                _react2.default.createElement(
+                    'h2',
+                    null,
+                    '\u0422\u043E\u0432\u0430\u0440\u044B:'
+                ),
+                _react2.default.createElement(
+                    'div',
+                    null,
+                    ItemTemplate
+                )
+            );
+        }
+    }]);
+
+    return ItemsShow;
+}(_react2.default.Component);
+
+exports.default = (0, _reactRedux.connect)(mapStateToProps)(ItemsShow);
+
+},{"../actions":67,"react":56,"react-dom":38,"react-redux":48,"redux":62}],73:[function(require,module,exports){
 'use strict';
 
 var _react = require('react');
@@ -21113,9 +21373,21 @@ var _App = require('./components/App');
 
 var _App2 = _interopRequireDefault(_App);
 
+var _Header = require('./components/Header');
+
+var _Header2 = _interopRequireDefault(_Header);
+
+var _AddItem = require('./components/AddItem');
+
+var _AddItem2 = _interopRequireDefault(_AddItem);
+
 var _Categories = require('./components/Categories');
 
 var _Categories2 = _interopRequireDefault(_Categories);
+
+var _ItemsShow = require('./components/ItemsShow');
+
+var _ItemsShow2 = _interopRequireDefault(_ItemsShow);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -21139,11 +21411,14 @@ _reactDom2.default.render(_react2.default.createElement(
     _react2.default.createElement(
         _App2.default,
         null,
-        _react2.default.createElement(_Categories2.default, null)
+        _react2.default.createElement(_Header2.default, null),
+        _react2.default.createElement(_Categories2.default, null),
+        _react2.default.createElement(_ItemsShow2.default, null),
+        _react2.default.createElement(_AddItem2.default, null)
     )
 ), document.getElementById('root'));
 
-},{"./components/App":68,"./components/Categories":69,"./reducers":72,"react":56,"react-dom":38,"react-redux":48,"redux":62}],71:[function(require,module,exports){
+},{"./components/AddItem":68,"./components/App":69,"./components/Categories":70,"./components/Header":71,"./components/ItemsShow":72,"./reducers":75,"react":56,"react-dom":38,"react-redux":48,"redux":62}],74:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -21151,27 +21426,64 @@ Object.defineProperty(exports, "__esModule", {
 });
 var InitialState = {
 
-    categories: [{
+    items: [{
         id: 1,
-        category_name: 'Продукты',
-        category_enc: '#products',
-        temp: true
+        category_belongs: "продукты",
+        item_name: 'Консервы',
+        item_about: '3 банки хорощих loremipsum',
+        temp: false
     }, {
         id: 2,
-        category_name: 'Магазины',
-        category_enc: '#shops',
+        category_belongs: "мебель",
+        item_name: 'диван',
+        item_about: 'старый большой диван отдам ы',
         temp: false
+    }, {
+        id: 3,
+        category_belongs: "мебель",
+        item_name: 'стул',
+        item_about: ' большой стул синий',
+        temp: false
+    }, {
+        id: 4,
+        category_belongs: "техника",
+        item_name: 'элетрочайник',
+        item_about: 'поменяю электрочайник с моей доплатой',
+        temp: false
+    }],
+    categories: [{
+        id: 0,
+        category_name: "все товары"
+    }, {
+        id: 1,
+        category_name: "одежда"
+    }, {
+        id: 2,
+        category_name: "обувь"
+    }, {
+        id: 3,
+        category_name: "мебель"
+    }, {
+        id: 4,
+        category_name: "техника"
+    }, {
+        id: 5,
+        category_name: "сад, огород"
+    }, {
+        id: 6,
+        category_name: "детские товары"
     }]
 };
+
 exports.default = InitialState;
 
-},{}],72:[function(require,module,exports){
+},{}],75:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.categories = undefined;
+exports.categories = exports.items = undefined;
 
 var _initialstate = require('./initialstate');
 
@@ -21185,24 +21497,51 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 //categories reducer
 
-var categories = exports.categories = function categories() {
-    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : _initialstate2.default.categories;
+var items = exports.items = function items() {
+    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : _initialstate2.default.items;
     var action = arguments[1];
 
     var obj = {};
+
     switch (action.type) {
-        case 'ADD_CATEGORY':
+        case 'ADD_ITEM':
+            //click on "добавить"
             return state.concat({
                 id: action.id,
-                category_name: action.name,
-                category_enc: action.enc,
+                category_belogs: action.category,
+                item_name: action.name,
+                item_about: action.about,
                 temp: action.temp
             });
+
+        case 'CAT_CHOICE':
+            //click on category
+
+            return state.map(function (elem, index) {
+                if (elem.category_belongs == action.choiseGoodTipe || action.choiseGoodTipe == "все товары") {
+                    elem.temp = false;
+                    return elem;
+                } else {
+                    elem.temp = true;
+                    return elem;
+                }
+            });
+
         default:
+            _initialstate2.default.items = state;
             return state;
+
     }
 };
 
 //* reducer
 
-},{"./initialstate":71}]},{},[70]);
+var categories = exports.categories = function categories() {
+    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : _initialstate2.default.categories;
+
+    var obj = {};
+
+    return state;
+};
+
+},{"./initialstate":74}]},{},[73]);
